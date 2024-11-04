@@ -52,7 +52,7 @@
                 openssl
                 socat
                 curlFull
-                cacert
+                dockerTools.caCertificates
                 gnugrep
                 ripgrep
                 neovim
