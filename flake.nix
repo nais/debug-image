@@ -53,7 +53,7 @@
                 openssl
                 socat
                 curlFull
-                caCerts
+                cacert
               ];
               pathsToLink = [ "/bin" ];
             };
