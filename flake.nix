@@ -56,7 +56,7 @@
                 persistenceTools = with pkgs; [ redis ];
                 binaryTools = with pkgs; [ strace ];
                 dockerEnv = with pkgs; [
-                  dockerTools.binEnv
+                  dockerTools.usrBinEnv
                   dockerTools.binSh
                   dockerTools.caCertificates
                 ];
