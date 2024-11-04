@@ -56,7 +56,7 @@
             config = {
               Entrypoint = [ "bash" ];
                User = "1069";
-            }
+            };
           };
         };
 
