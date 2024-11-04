@@ -54,7 +54,7 @@
                   zip
                 ];
                 persistenceTools = with pkgs; [ redis ];
-                binaryTools = with pkgs; [ dstate strace ];
+                binaryTools = with pkgs; [ strace ];
                 dockerEnv = with pkgs; [
                   dockerTools.binEnv
                   dockerTools.binSh
