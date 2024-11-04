@@ -50,6 +50,8 @@
                 dstat
                 zip
                 unzip
+                openssl
+                socat
               ];
               pathsToLink = [ "/bin" ];
             };
