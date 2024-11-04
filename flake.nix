@@ -52,12 +52,14 @@
                 unzip
                 openssl
                 socat
+                curlFull
+                caCerts
               ];
               pathsToLink = [ "/bin" ];
             };
             config = {
               Entrypoint = [ "bash" ];
-               User = "1069";
+              User = "1069";
             };
           };
         };
