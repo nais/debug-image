@@ -28,35 +28,38 @@
               name = "packages";
               paths = with pkgs; [
                 bash
+                kcat
                 curl
                 wget
-                #                iproute2 # For 'ip' command and other networking tools.
-                inetutils # For 'ping', 'traceroute', and other networking tools.
+                iproute2
+                inetutils
                 netcat
-                dnsutils # For 'dig' and 'nslookup'.
+                dnsutils
                 htop
-                #               strace
+                strace
                 lsof
                 jq
                 yq
                 python3
                 vim
-                coreutils # For common Unix commands like 'cat', 'ls', etc.
-                util-linux # Provides tools like 'lsblk', 'fdisk', 'more'.
-                procps # For 'ps', 'top', etc.
+                coreutils
+                util-linux
+                procps
                 nmap
                 tcpdump
-                #   dstat
+                dstat
                 zip
                 unzip
               ];
               pathsToLink = [ "/bin" ];
             };
-            config.Entrypoint = [ "bash" ];
+            config = {
+              Entrypoint = [ "bash" ];
+               User = "1069";
+            }
           };
         };
 
-        # Now `nix fmt` works!
         formatter = pkgs.alejandra;
       });
 }
