@@ -1,66 +1,60 @@
 name: build
-gon:
+
+on:
   push:
     paths-ignore:
       - "**/*.md"
       - ".env*"
 
-name: "debug image"
-description: "build and push debug-docker container"
+env:
+  NAME: debug
 
-outputs:
-  image:
-    description: "the full image address"
-    value: ${{ steps.set-outputs.outputs.image }}
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
 
-runs:
-  using: "composite"
-  steps:
-    - uses: actions/checkout@v3
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v3
 
-    - name: Install Nix
-      uses: DeterminateSystems/nix-installer-action@v3
+      - name: Build Containers
+        id: build-containers
+        shell: bash
+        run: |
+          nix build .#container --out-link result-container && docker load < result-container
 
+      - id: "auth"
+        name: "Authenticate to Google Cloud"
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider:  ${{ secrets.NAIS_IO_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: gh-${{env.NAME}}@nais-io.iam.gserviceaccount.com
+          token_format: access_token
 
-    - name: Build Containers
-      id: build-containers
-      shell: bash
-      run: |
-        nix build .#container --out-link result-container && docker load < result-container
-        NAME_AND_TAG=$(docker image ls | grep ${{ steps.analyze.outputs.container }} | head -n1 | awk '{print $1":"$2}')
-        docker tag ${NAME_AND_TAG} ${{ steps.analyze.outputs.imageAddress }}
+      - name: "Handle auth failure"
+        if: ${{ failure() && steps.auth.outcome == 'failure' }}
+        shell: bash
+        run: |
+          cat <<EOF
+          ::error ::Failed to authenticate to Google Cloud.
+          EOF
 
-    - id: "auth"
-      name: "Authenticate to Google Cloud"
-      if: ${{ inputs.push == 'true' }}
-      uses: "google-github-actions/auth@35b0e87d162680511bf346c299f71c9c5c379033" # ratchet:google-github-actions/auth@v1.1.1
-      with:
-        workload_identity_provider: ${{ inputs.workload_identity_provider }}
-        service_account: ${{ inputs.google_service_account }}@nais-io.iam.gserviceaccount.com
-        token_format: access_token
+      - name: "Login to registry"
+        id: login-to-registry
+        uses: docker/login-action@v3
+        with:
+          registry: "europe-north1-docker.pkg.dev"
+          username: "oauth2accesstoken"
+          password: "${{ steps.auth.outputs.access_token }}"
 
-    - name: "Handle auth failure"
-      if: ${{ failure() && steps.auth.outcome == 'failure' }}
-      shell: bash
-      run: |
-        cat <<EOF
-        ::error ::Failed to authenticate to Google Cloud.
-        EOF
-
-    - name: "Login to registry"
-      id: login-to-registry
-      if: ${{ inputs.push == 'true' }}
-      uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d # ratchet:docker/login-action@v2
-      with:
-        registry: "${{ inputs.registry }}"
-        username: "oauth2accesstoken"
-        password: "${{ steps.auth.outputs.access_token }}"
-
-
-    - name: Push image to registry
-      id: push
-      shell: bash
-      run: |
-        docker push ${{ steps.analyze.outputs.imageAddress }}
+      - name: Push image to registry
+        id: push
+        shell: bash
+        run: |
+          docker push europe-north1-docker.pkg.dev/nais-io/nais/images/${{env.NAME}}:latest

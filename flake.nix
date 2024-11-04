@@ -19,12 +19,11 @@
 
         # Compile workspace code (including 3rd party dependencies)
       in {
-        devShell = pkgs.mkShell { buildInputs = with pkgs; [ just ]; };
         packages = rec {
           default = image;
           image = pkgs.dockerTools.buildImage {
             name = "nais-debug";
-            tag = "docker";
+            tag = "latest";
             copyToRoot = pkgs.buildEnv {
               name = "packages";
               paths = with pkgs; [
