@@ -26,37 +26,48 @@
             tag = "latest";
             copyToRoot = pkgs.buildEnv {
               name = "packages";
-              paths = with pkgs; [
-                bash
-                kcat
-                wget
-                iproute2
-                inetutils
-                netcat
-                dnsutils
-                htop
-                strace
-                lsof
-                jq
-                yq
-                python3
-                vim
-                coreutils
-                util-linux
-                procps
-                nmap
-                tcpdump
-                dstat
-                zip
-                unzip
-                openssl
-                socat
-                curlFull
-                dockerTools.caCertificates
-                gnugrep
-                ripgrep
-                neovim
-              ];
+              paths = let
+                networkTools = with pkgs; [
+                  curlFull
+                  dnsutils
+                  inetutils
+                  iproute2
+                  lsof
+                  netcat
+                  nmap
+                  openssl
+                  socat
+                  tcpdump
+                  wget
+
+                ];
+                shellTools = with pkgs; [
+                  zip
+                  unzip
+                  gnugrep
+                  ripgrep
+                  coreutils
+                  python3
+                  jq
+                  yq
+                  util-linux
+                  procps
+                  vim
+                  htop
+                ];
+                persistenceTools = with pkgs [redis];
+
+                binaryTools = with pkgs; [ strace dstat ];
+                dockerEnv = with pkgs; [
+                  dockerTools.caCertificates
+                  dockerTools.binEnv
+                  dockerTools.binSh
+
+                ];
+                kafkaTools = [ pkgs.kcat ];
+              in shellTools ++ binaryTools ++ netTools ++ dockerEnv
+              ++ kafkaTools ++ persistencetools;
+
               pathsToLink = [ "/bin" "/etc" ];
             };
             config = {
