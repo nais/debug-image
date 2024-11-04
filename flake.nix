@@ -22,7 +22,7 @@
         packages = rec {
           default = image;
           image = pkgs.dockerTools.buildImage {
-            name = "nais-debug";
+            name = "europe-north1-docker.pkg.dev/nais-io/nais/images/debug";
             tag = "latest";
             copyToRoot = pkgs.buildEnv {
               name = "packages";

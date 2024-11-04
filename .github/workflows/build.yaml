@@ -27,7 +27,7 @@ jobs:
         id: build-containers
         shell: bash
         run: |
-          nix build .#container --out-link result-container && docker load < result-container
+          nix build --out-link result-container && docker load < result-container
 
       - id: "auth"
         name: "Authenticate to Google Cloud"
