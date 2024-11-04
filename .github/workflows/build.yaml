@@ -1,12 +1,9 @@
 name: build
 
 on:
-  schedule:
-    - "001**"
   push:
     paths-ignore:
       - "**/*.md"
-      - ".env*"
 
 env:
   NAME: debug
