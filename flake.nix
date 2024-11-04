@@ -29,7 +29,6 @@
               paths = with pkgs; [
                 bash
                 kcat
-                curl
                 wget
                 iproute2
                 inetutils
