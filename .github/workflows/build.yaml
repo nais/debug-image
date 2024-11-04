@@ -67,3 +67,4 @@ jobs:
       - name: Generate the SPDX manifest
         run: |
           nix2sbom .#  > sbom.json
+          cat sbom.json
