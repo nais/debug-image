@@ -16,7 +16,6 @@
           "${builtins.toString self.revCount}-${self.shortRev}"
         else
           "gitDirty";
-
         # Compile workspace code (including 3rd party dependencies)
       in {
         packages = rec {
@@ -39,34 +38,31 @@
                   socat
                   tcpdump
                   wget
-
                 ];
                 shellTools = with pkgs; [
-                  zip
-                  unzip
-                  gnugrep
-                  ripgrep
                   coreutils
-                  python3
-                  jq
-                  yq
-                  util-linux
-                  procps
-                  vim
+                  gnugrep
                   htop
+                  jq
+                  procps
+                  python3
+                  ripgrep
+                  unzip
+                  util-linux
+                  vim
+                  yq
+                  zip
                 ];
-                persistenceTools = with pkgs [redis];
-
-                binaryTools = with pkgs; [ strace dstat ];
+                persistenceTools = with pkgs; [ redis ];
+                binaryTools = with pkgs; [ dstate strace ];
                 dockerEnv = with pkgs; [
-                  dockerTools.caCertificates
                   dockerTools.binEnv
                   dockerTools.binSh
-
+                  dockerTools.caCertificates
                 ];
                 kafkaTools = [ pkgs.kcat ];
-              in shellTools ++ binaryTools ++ netTools ++ dockerEnv
-              ++ kafkaTools ++ persistencetools;
+              in shellTools ++ binaryTools ++ dockerEnv ++ kafkaTools
+              ++ networkTools ++ persistenceTools;
 
               pathsToLink = [ "/bin" "/etc" ];
             };
@@ -77,6 +73,6 @@
           };
         };
 
-        formatter = pkgs.alejandra;
+        formatter = pkgs.nixfmt-rfc-style;
       });
 }
