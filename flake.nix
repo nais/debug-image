@@ -53,8 +53,11 @@
                 socat
                 curlFull
                 cacert
+                gnugrep
+                ripgrep
+                neovim
               ];
-              pathsToLink = [ "/bin" ];
+              pathsToLink = [ "/bin" "/etc" ];
             };
             config = {
               Entrypoint = [ "bash" ];
