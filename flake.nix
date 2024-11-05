@@ -40,9 +40,13 @@
                 '');
                 motd = pkgs.writeTextDir "/home/nais/README" ''
                   Nais debug shell.
+                  If you'd like some additional tool or have comments:
+                  https://github.com/nais/debug/issues
+
                   You have an unsettling feeling that you’ve been here before.
                   You see you have curl and openssl, there's a heap of binaries in /bin.
                   There's a door to the west
+
                 '';
                 profile = pkgs.writeTextDir "/etc/bash.bashrc" ''
                   if [ -f /etc/motd ]; then
