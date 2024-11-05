@@ -63,24 +63,24 @@
                   wget
                 ];
                 shellTools = with pkgs; [
-                  profile
-                  motd
-                  extra
-                  man-pages
+                  bsdgames
                   coreutils
+                  extra
                   gnugrep
                   htop
                   jq
+                  man-pages
+                  mg
+                  motd
                   procps
-                  python3
+                  profile
                   ripgrep
                   unzip
                   util-linux
                   vim
-                  mg
+                  which
                   yq
                   zip
-                  bsdgames
                 ];
                 persistenceTools = with pkgs; [ redis ];
                 binaryTools = with pkgs; [ strace ];
@@ -96,7 +96,7 @@
               pathsToLink = [ "/bin" "/etc" ];
             };
             config = {
-              Workdir = "home/nais";
+              Workingdir = "/home/nais";
               Entrypoint = [ "sh" ];
               User = "1069";
             };
