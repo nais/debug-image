@@ -26,7 +26,7 @@
             copyToRoot = pkgs.buildEnv {
               name = "packages";
               paths = let
-                extra = (pkgs.writeShellScriptBin "go west" ''
+                extra = (pkgs.writeShellScriptBin "go" ''
                   #!/bin/sh
                   adventure
                 '');
