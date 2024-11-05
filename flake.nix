@@ -67,7 +67,7 @@
               pathsToLink = [ "/bin" "/etc" ];
             };
             config = {
-              Entrypoint = [ "bash" ];
+              Entrypoint = [ "sh" ];
               User = "1069";
             };
           };
