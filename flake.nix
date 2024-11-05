@@ -66,6 +66,7 @@
                   profile
                   motd
                   extra
+                  man-pages
                   coreutils
                   gnugrep
                   htop
@@ -95,7 +96,8 @@
               pathsToLink = [ "/bin" "/etc" ];
             };
             config = {
-              Cmd = [ "sh" ];
+              Workdir = "home/nais";
+              Entrypoint = [ "sh" ];
               User = "1069";
             };
           };
