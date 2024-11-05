@@ -26,9 +26,21 @@
             copyToRoot = pkgs.buildEnv {
               name = "packages";
               paths = let
+                extra = (pkgs.writeShellScriptBin "go west" ''
+                  #!/bin/sh
+                  adventure
+                '');
+                motd = pkgs.writeTextDir "/etc/motd" ''
+                  Nais debug shell.
+                  You have an unsettling feeling that you’ve been here before.
+                  You see you have curl and openssl, there's a heap of binaries in /bin.
+                  There's a door to the west
+                '';
+
                 networkTools = with pkgs; [
                   curlFull
                   dnsutils
+                  iana-etc
                   inetutils
                   iproute2
                   lsof
@@ -40,6 +52,8 @@
                   wget
                 ];
                 shellTools = with pkgs; [
+                  motd
+                  extra
                   coreutils
                   gnugrep
                   htop
@@ -50,8 +64,10 @@
                   unzip
                   util-linux
                   vim
+                  mg
                   yq
                   zip
+                  bsdgames
                 ];
                 persistenceTools = with pkgs; [ redis ];
                 binaryTools = with pkgs; [ strace ];
