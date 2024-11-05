@@ -36,7 +36,7 @@
                   #!/bin/sh
                   adventure
                 '');
-                motd = pkgs.writeTextDir "/etc/motd" ''
+                motd = pkgs.writeTextDir "/home/nais/README" ''
                   Nais debug shell.
                   You have an unsettling feeling that you’ve been here before.
                   You see you have curl and openssl, there's a heap of binaries in /bin.
@@ -67,6 +67,7 @@
                   coreutils
                   extra
                   gnugrep
+                  guile
                   htop
                   jq
                   man-pages
@@ -93,7 +94,7 @@
               in shellTools ++ binaryTools ++ dockerEnv ++ kafkaTools
               ++ networkTools ++ persistenceTools;
 
-              pathsToLink = [ "/bin" "/etc" ];
+              pathsToLink = [ "/bin" "/etc" "/home/nais" ];
             };
             config = {
               Workingdir = "/home/nais";
