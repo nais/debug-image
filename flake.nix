@@ -42,7 +42,7 @@
                   You see you have curl and openssl, there's a heap of binaries in /bin.
                   There's a door to the west
                 '';
-                profile = pkgs.writeTextDir "/etc/profile" ''
+                profile = pkgs.writeTextDir "/home/nais/.bashrc" ''
                   # Display the MOTD if it exists
                                if [ -f /etc/motd ]; then
                                  cat /etc/motd
@@ -93,7 +93,7 @@
               in shellTools ++ binaryTools ++ dockerEnv ++ kafkaTools
               ++ networkTools ++ persistenceTools;
 
-              pathsToLink = [ "/bin" "/etc" ];
+              pathsToLink = [ "/bin" "/etc" "home/nais" ];
             };
             config = {
               Entrypoint = [ "sh" ];
