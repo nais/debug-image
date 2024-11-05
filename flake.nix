@@ -23,6 +23,12 @@
           image = pkgs.dockerTools.buildImage {
             name = "europe-north1-docker.pkg.dev/nais-io/nais/images/debug";
             tag = "latest";
+
+            runAsRoot = ''
+              ${pkgs.dockerTools.shadowSetup}
+              groupadd -r nais
+              useradd -r -g nais -u 1069 -d /home/nais -m nais
+            '';
             copyToRoot = pkgs.buildEnv {
               name = "packages";
               paths = let
