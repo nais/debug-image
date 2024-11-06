@@ -48,7 +48,7 @@
                   There's a door to the west
 
                 '';
-                profile = pkgs.writeTextDir "/etc/bash.bashrc" ''
+                profile = pkgs.writeTextDir "/etc/bashrc" ''
                   if [ -f /etc/motd ]; then
                     cat /etc/motd
                   fi
@@ -105,7 +105,7 @@
             };
             config = {
               Workingdir = "/home/nais";
-              Entrypoint = [ "bash" "--rcfile" "/etc/bash.bashrc" ];
+              Entrypoint = [ "bash" "--rcfile" "/etc/bashrc" ];
               User = "1069";
             };
           };
