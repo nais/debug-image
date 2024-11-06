@@ -105,7 +105,7 @@
             };
             config = {
               Workingdir = "/home/nais";
-              Entrypoint = [ "bash" "--rcfile" "/etc/bashrc" ];
+              Entrypoint = [ "bash" "-i" ];
               User = "1069";
             };
           };
