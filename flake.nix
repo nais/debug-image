@@ -73,6 +73,7 @@
                   bsdgames
                   coreutils
                   extra
+                  gnused
                   gnugrep
                   guile
                   htop
