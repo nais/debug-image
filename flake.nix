@@ -38,7 +38,7 @@
                   #!/bin/sh
                   adventure
                 '');
-                motd = pkgs.writeTextDir "/etc/motd" ''
+                motd = pkgs.writeTextDir "/home/nais/README" ''
                   Nais debug shell.
                   If you'd like some additional tool or have comments:
                   https://github.com/nais/debug/issues
