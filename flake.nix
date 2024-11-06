@@ -38,7 +38,7 @@
                   #!/bin/sh
                   adventure
                 '');
-                motd = pkgs.writeTextDir "/home/nais/README" ''
+                motd = pkgs.writeTextDir "/etc/motd" ''
                   Nais debug shell.
                   If you'd like some additional tool or have comments:
                   https://github.com/nais/debug/issues
@@ -69,6 +69,7 @@
                   wget
                 ];
                 shellTools = with pkgs; [
+                  bashInteractive
                   bsdgames
                   coreutils
                   extra
@@ -104,7 +105,7 @@
             };
             config = {
               Workingdir = "/home/nais";
-              Entrypoint = [ "sh" ];
+              Entrypoint = [ "bash" ];
               User = "1069";
             };
           };
