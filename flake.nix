@@ -90,6 +90,7 @@
                   which
                   yq
                   zip
+                  zulu
                 ];
                 persistenceTools = with pkgs; [ redis ];
                 binaryTools = with pkgs; [ strace ];
@@ -106,7 +107,7 @@
             };
             config = {
               Workingdir = "/home/nais";
-              Entrypoint = [ "bash" "-i" ];
+              Cmd = [ "bash" ];
               User = "1069";
             };
           };
