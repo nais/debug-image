@@ -27,7 +27,7 @@
             runAsRoot = ''
               ${pkgs.dockerTools.shadowSetup}
               groupadd -r nais
-              useradd -r -g nais -u 1069 -d /home/nais -m nais
+              useradd -r -g nais -G 65535 -u 1069 -d /home/nais -m nais
               chown nais:nais /home/nais
               chmod +w /home/nais
             '';
