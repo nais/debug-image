@@ -84,6 +84,7 @@
                   procps
                   profile
                   ripgrep
+                  su
                   unzip
                   util-linux
                   vim
